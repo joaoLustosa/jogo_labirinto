@@ -1,13 +1,13 @@
 import tkinter as tk
 import random
 
-TAMANHO = 5
-TAMANHO_CELULA = 60
+TAMANHO = 10
+TAMANHO_CELULA = 40  # Tamanho menor para caber bem na janela
 
 class JogoLabirinto:
     def __init__(self, raiz):
         self.raiz = raiz
-        self.raiz.title("Jogo do Labirinto - Versão Interface")
+        self.raiz.title("Jogo do Labirinto - 10x10")
 
         self.labirinto, self.inicio, self.fim = self.gerar_labirinto_aleatorio(TAMANHO)
         self.estado_atual = self.inicio
@@ -44,8 +44,13 @@ class JogoLabirinto:
             self.estado_atual = novo
             self.desenhar_labirinto()
             if self.estado_atual == self.fim:
-                self.canvas.create_text((TAMANHO * TAMANHO_CELULA) // 2, (TAMANHO * TAMANHO_CELULA) // 2,
-                                        text="🎉 Venceu!", font=("Helvetica", 24), fill="green")
+                self.canvas.create_text(
+                    (TAMANHO * TAMANHO_CELULA) // 2,
+                    (TAMANHO * TAMANHO_CELULA) // 2,
+                    text="🎉 Venceu!",
+                    font=("Helvetica", 24),
+                    fill="green"
+                )
 
     def estado_valido(self, estado):
         x, y = estado
@@ -88,8 +93,16 @@ class JogoLabirinto:
                     dfs(nx, ny)
 
         dfs(0, 0)
+
+        # 🔧 Garante que a saída está desbloqueada e conectada
         fim = (tamanho - 1, tamanho - 1)
         labirinto[fim[0]][fim[1]] = '.'
+
+        if fim[0] > 0 and labirinto[fim[0] - 1][fim[1]] == '#':
+            labirinto[fim[0] - 1][fim[1]] = '.'
+        if fim[1] > 0 and labirinto[fim[0]][fim[1] - 1] == '#':
+            labirinto[fim[0]][fim[1] - 1] = '.'
+
         return labirinto, inicio, fim
 
 
