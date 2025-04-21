@@ -39,7 +39,7 @@ O jogador deve encontrar o caminho do ponto de início (🔵) até a saída (�
 
 ### 2. Rodar Modo Terminal
 
-```bash
+
 python labirinto_terminal.py
 
 
