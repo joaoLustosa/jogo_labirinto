@@ -64,9 +64,6 @@ O jogador deve conduzir o personagem do ponto de **início (🔵 / `S`)** até o
 
 ---
 
-Se quiser, posso te ajudar também a criar um arquivo de README com essas informações!
-## 🎮 Modos de Jogo
-
 ### 🖥️ Terminal (`labirinto_terminal.py`)
 
 - Geração automática de labirintos com caminho garantido.
