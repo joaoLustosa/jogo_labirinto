@@ -180,8 +180,10 @@ Então:
 | q56          | q51         | -           | -           | -           |
 | q57          | q54         | -           | -           | -           |
 
+
 * Representação do autômato no JFLAP
 
+![AUTOMATO-JFLAP](automato_jflap.jpeg)
 
 ## 📄 Código
 
