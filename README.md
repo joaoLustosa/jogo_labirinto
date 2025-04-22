@@ -48,7 +48,7 @@ python labirinto_terminal.py
 Símbolo	   Significado
 #	       Parede (bloqueia)
 .	       Caminho livre
-S          Início
+S        Início
 E	       Saída
 P	       Posição atual
 
