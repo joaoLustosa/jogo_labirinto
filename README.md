@@ -45,166 +45,168 @@ python labirinto_terminal.py
 
 📐 Legenda do Labirinto
 
-Símbolo	   Significado
-#	       Parede (bloqueia)
-.	       Caminho livre
-S        Início
-E	       Saída
-P	       Posição atual
+| Símbolo |	Significado       | Cores     |
+| ------- | ----------------- | --------- |
+|    #	  | Parede (bloqueia) | Preto     |
+|    .	  | Caminho livre     | Branco    |
+|    S    | Início            | Azul      |
+|    E 	  | Saída             | Vermelho  |
+|    P	  | Posição atual     | Verde     |
 
 
-🧠 Como o Autômato está atuando no código?
+## 🧠 Como o Autômato está atuando no código?
+
 ✅ 1. Estado Atual (self.estado_atual)
-Representa a posição atual do jogador no labirinto.
+- Representa a posição atual do jogador no labirinto.
 
-É atualizado a cada movimento válido.
+- É atualizado a cada movimento válido.
 
 🔁 2. Transições (mover(direcao))
-Quando o jogador fornece um comando (input), o autômato processa essa entrada e tenta realizar uma transição de estado.
+- Quando o jogador fornece um comando (input), o autômato processa essa entrada e tenta realizar uma transição de estado.
 
-Se o próximo estado for válido (não é parede, nem fora dos limites), a transição é realizada.
+- Se o próximo estado for válido (não é parede, nem fora dos limites), a transição é realizada.
 
-Isso simula o funcionamento exato de um AFD, onde para cada estado e entrada, há uma transição definida (ou não, se inválida).
+- Isso simula o funcionamento exato de um AFD, onde para cada estado e entrada, há uma transição definida (ou não, se inválida).
 
 ❌ 3. Transições Inválidas
-Se a transição leva a uma parede ou fora do labirinto, ela é rejeitada, e o estado atual permanece o mesmo.
+- Se a transição leva a uma parede ou fora do labirinto, ela é rejeitada, e o estado atual permanece o mesmo.
 
-Isso reforça o conceito de um autômato que não muda de estado se não há uma transição válida para a entrada fornecida.
+- Isso reforça o conceito de um autômato que não muda de estado se não há uma transição válida para a entrada fornecida.
 
 🏁 4. Estado Final (self.estado_final())
-Quando o jogador atinge o estado final (a célula da saída), o autômato reconhece que atingiu o estado de aceitação.
+- Quando o jogador atinge o estado final (a célula da saída), o autômato reconhece que atingiu o estado de aceitação.
 
-O jogo termina com uma mensagem de sucesso, assim como um AFD que reconhece uma cadeia ao chegar a um estado final.
-
-
-🧾 Resumo da Lógica do Autômato no Código
-Elemento do AFD	     Implementação no Código
-Estados              Células do labirinto (x, y)
-Estado Inicial	     self.inicio
-Estado Atual	     self.estado_atual
-Estado Final	     self.fim
-Alfabeto (Entradas)	 ["cima", "baixo", "esquerda", "direita"]
-Transições	          Método mover(direcao)
-Regras de Transição   Método estado_valido(estado)
-Aceitação da Cadeia   Quando estado_atual == fim 
+- O jogo termina com uma mensagem de sucesso, assim como um AFD que reconhece uma cadeia ao chegar a um estado final.
 
 
-🧠 Representação Formal da Transição:
-Seja:
+## 🧾 Resumo da Lógica do Autômato no Código
 
-Q: conjunto de estados possíveis (todas as células (x, y) do labirinto)
+| Elemento do AFD	    | Implementação no Código                       |
+| ------------------- | --------------------------------------------- |
+| Estados             |   Células do labirinto (x, y)                 |
+| Estado Inicial	    |   self.inicio                                 |
+| Estado Atual	      |   self.estado_atual                           |
+| Estado Final	      |   self.fim                                    |
+| Alfabeto (Entradas) |	  ["cima", "baixo", "esquerda", "direita"]    |
+| Transições	        |   Método mover(direcao)                       |
+| Regras de Transição |   Método estado_valido(estado)                |
+| Aceitação da Cadeia |   Quando estado_atual == fim                  |
 
-Σ: alfabeto = {cima, baixo, esquerda, direita}
 
-δ: função de transição δ(q, σ) = q'
+### 🧠 Representação Formal da Transição:
+
+Seja A( Q, Σ, δ, q0, F ):
+
+* Q: conjunto de estados (todas as células (x, y) do labirinto)
+
+* Σ: alfabeto = {cima, baixo, esquerda, direita}
+
+* δ: função de transição δ(q, σ) = q'
+
+* q0 : estado inicial
+
+* F : conjunto de estados de aceitação
 
 Então:
-δ((x, y), 'cima')    = (x-1, y) se célula livre
-δ((x, y), 'baixo')   = (x+1, y) se célula livre
-δ((x, y), 'esquerda')= (x, y-1) se célula livre
-δ((x, y), 'direita') = (x, y+1) se célula livre
+
+* δ((x, y), 'cima')    = (x-1, y) se célula livre
+
+* δ((x, y), 'baixo')   = (x+1, y) se célula livre
+
+* δ((x, y), 'esquerda')= (x, y-1) se célula livre
+
+* δ((x, y), 'direita') = (x, y+1) se célula livre
 
 
+## 📄 Código
 
-📄 Código
-🔧 class AutomatoLabirinto
-Classe que simula um autômato finito para navegação em um labirinto.
+### 🔧 class AutomatoLabirinto
 
-__init__(labirinto, inicio, fim)
-Inicializa o autômato com o labirinto, o ponto inicial e o ponto final.
+* Classe que simula um autômato finito para navegação em um labirinto.
 
-labirinto: matriz 2D com paredes (#) e caminhos (.)
+__init__(labirinto, inicio, fim) :
 
-inicio: tupla (linha, coluna) do ponto inicial
+* Inicializa o autômato com o labirinto, o ponto inicial e o ponto final.
 
-fim: tupla (linha, coluna) da saída
+labirinto: matriz 2D com paredes (#) e caminhos (.) :
 
-mover(direcao)
-Move o jogador em uma das 4 direções, se possível.
+* inicio: tupla (linha, coluna) do ponto inicial
 
-Parâmetro: 'cima', 'baixo', 'esquerda' ou 'direita'
+* fim: tupla (linha, coluna) da saída
 
-Retorna: True se o movimento foi válido, False caso contrário
+mover(direcao) :
+* Move o jogador em uma das 4 direções, se possível.
 
-estado_valido(estado)
-Verifica se uma posição é válida (não é parede e está dentro dos limites).
+* Parâmetro: 'cima', 'baixo', 'esquerda' ou 'direita'
 
-Parâmetro: estado (tupla com coordenadas)
+* Retorna: True se o movimento foi válido, False caso contrário.
 
-Retorna: True ou False
+estado_valido(estado) :
 
-estado_final()
-Verifica se o jogador chegou ao estado final.
+* Verifica se uma posição é válida (não é parede e está dentro dos limites).
 
-Retorna: True se chegou na saída (fim), False caso contrário
+* Parâmetro: estado (tupla com coordenadas).
 
-exibir_labirinto()
-Exibe o labirinto no terminal com os seguintes símbolos:
+* Retorna: True ou False.
 
-S: início
+estado_final() :
+* Verifica se o jogador chegou ao estado final.
 
-E: fim
+* Retorna: True se chegou na saída (fim), False caso contrário.
 
-P: posição atual do jogador
+exibir_labirinto() :
 
-#: parede
+* Exibe o labirinto no terminal.
 
-.: caminho livre
+### 🔁 def gerar_labirinto_aleatorio(tamanho)
 
-🔁 def gerar_labirinto_aleatorio(tamanho)
-Gera uma matriz tamanho x tamanho com caminhos aleatórios usando busca em profundidade (DFS).
+* Gera uma matriz tamanho x tamanho com caminhos aleatórios usando busca em profundidade (DFS).
 
-Início fixo em (0, 0)
+* Início fixo em (0, 0)
 
-Fim fixo em (tamanho - 1, tamanho - 1)
+* Fim fixo em (tamanho - 1, tamanho - 1)
 
-Retorna: labirinto, inicio, fim
+* Retorna: labirinto, inicio, fim
 
-▶️ def main()
-Função principal:
+### ▶️ def main()
 
-Gera o labirinto
+* Função principal:
 
-Inicializa o autômato
+  - Gera o labirinto
 
-Lê comandos do jogador até que ele chegue à saída
+  - Inicializa o autômato
+
+* Lê comandos do jogador até que ele chegue à saída
 
 
-🖼️ Interface Gráfica 
+## 🖼️ Interface Gráfica 
 
-🔧 Classe JogoLabirinto
-__init__()
-Inicializa a janela, o canvas, os botões e o labirinto.
+### 🔧 Classe JogoLabirinto
 
-Define o ponto inicial, o final e a posição atual do jogador.
+* \_\_init_\_( ) : Inicializa a janela, o canvas, os botões e o labirinto.
 
-📦 Métodos principais
-criar_botoes()
-Cria os botões de movimento (↑, ↓, ←, →) no layout.
+* Define o ponto inicial, o final e a posição atual do jogador.
 
-mover(direcao)
-Move o jogador na direção especificada, se o caminho for válido.
-Se o jogador chegar ao fim, exibe a mensagem "🎉 Venceu!".
+### 📦 Métodos principais
 
-estado_valido(estado)
-Verifica se a célula é acessível (não é parede nem fora da matriz).
+* criar_botoes()
+  - Cria os botões de movimento (↑, ↓, ←, →) no layout.
 
-desenhar_labirinto()
-Desenha o labirinto no canvas.
-Usa cores:
+* mover(direcao) :
 
-Preto: parede (#)
+  - Move o jogador na direção especificada, se o caminho for válido. Se o jogador chegar ao fim, exibe a mensagem "🎉 Venceu!".
 
-Branco: caminho (.)
+* estado_valido(estado) :
 
-Azul: início
+  - Verifica se a célula é acessível (não é parede nem fora da matriz).
 
-Vermelho: fim
+* desenhar_labirinto() : 
 
-Verde: jogador (posição atual)
+  - Desenha o labirinto no canvas.
 
-definir_labirinto_fixo()
-Retorna uma matriz 10x10 com o layout do labirinto, o ponto de início e o de saída.
+* definir_labirinto_fixo() :
+
+  - Retorna uma matriz 10x10 com o layout do labirinto, o ponto de início e o de saída.
 
 
 
