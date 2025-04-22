@@ -14,6 +14,57 @@ O jogador deve encontrar o caminho do ponto de início (🔵) até a saída (�
 
 ---
 
+## 📜 Regras do Jogo do Labirinto
+
+### 🎯 Objetivo
+O jogador deve conduzir o personagem do ponto de **início (🔵 / `S`)** até o **ponto de saída (🔴 / `E`)**, evitando as **paredes (⬛ / `#`)** e utilizando apenas caminhos válidos (⬜ / `.`).
+
+---
+
+### 🔄 Como Jogar
+
+#### 🖥️ Modo Terminal (`labirinto_terminal.py`)
+- Os labirintos são **gerados automaticamente**, sempre com um caminho garantido até a saída.
+- A movimentação é feita por **comandos textuais**: `"cima"`, `"baixo"`, `"esquerda"`, `"direita"`.
+- O labirinto e a **posição atual (`P` / verde)** são atualizados a cada jogada no terminal.
+
+#### 🖼️ Modo Gráfico (`labirinto_interface_padronizado.py`)
+- O labirinto é **fixo** e exibido em uma interface intuitiva com botões direcionais.
+- A movimentação ocorre ao clicar nos botões (↑, ↓, ←, →).
+- Ao chegar à saída, uma mensagem de **"🎉 Venceu!"** é exibida.
+
+---
+
+### 🧠 Regras de Funcionamento do Jogo (com base no Autômato Finito)
+
+1. **Estado Atual (`self.estado_atual`)**  
+   - Representa a célula onde o jogador está atualmente.
+
+2. **Transições (`mover(direção)`)**  
+   - A cada comando, o autômato tenta mudar de estado (célula).
+   - Se a célula de destino for válida (livre e dentro dos limites), a transição acontece.
+
+3. **Transições Inválidas**
+   - Se o movimento for para uma parede ou fora do labirinto, o comando é ignorado.
+
+4. **Estado Final (`self.estado_final()`)**
+   - Se o jogador alcança a célula da saída, o jogo termina com sucesso.
+
+---
+
+### 📐 Lenda dos Símbolos
+
+| Símbolo | Significado           | Representação |
+|---------|------------------------|----------------|
+| `#`     | Parede                 | ⬛ Preto        |
+| `.`     | Caminho livre          | ⬜ Branco       |
+| `S`     | Início                 | 🔵 Azul         |
+| `E`     | Saída                  | 🔴 Vermelho     |
+| `P`     | Posição atual do jogador | 🟢 Verde     |
+
+---
+
+Se quiser, posso te ajudar também a criar um arquivo de README com essas informações!
 ## 🎮 Modos de Jogo
 
 ### 🖥️ Terminal (`labirinto_terminal.py`)
