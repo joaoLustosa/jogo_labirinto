@@ -52,15 +52,15 @@ O jogador deve conduzir o personagem do ponto de **início (🔵 / `S`)** até o
 
 ---
 
-### 📐 Lenda dos Símbolos
+### 📐 Legenda dos Símbolos
 
-| Símbolo | Significado           | Representação |
-|---------|------------------------|----------------|
-| `#`     | Parede                 | ⬛ Preto        |
-| `.`     | Caminho livre          | ⬜ Branco       |
-| `S`     | Início                 | 🔵 Azul         |
-| `E`     | Saída                  | 🔴 Vermelho     |
-| `P`     | Posição atual do jogador | 🟢 Verde     |
+| Símbolo | Significado              | Representação   |
+|---------|--------------------------|-----------------|
+| `#`     | Parede                   | ⬛ Preto        |
+| `.`     | Caminho livre            | ⬜ Branco       |
+| `S`     | Início                   | 🔵 Azul         |
+| `E`     | Saída                    | 🔴 Vermelho     |
+| `P`     | Posição atual do jogador | 🟢 Verde        |
 
 ---
 
@@ -87,29 +87,20 @@ O jogador deve conduzir o personagem do ponto de **início (🔵 / `S`)** até o
 
 ### 2. Rodar Modo Terminal
 
+Dentro do terminal, executar:
 
-python labirinto_terminal.py
-
-
-📐 Legenda do Labirinto
-
-| Símbolo |	Significado       | Cores     |
-| ------- | ----------------- | --------- |
-|    #	  | Parede (bloqueia) | Preto     |
-|    .	  | Caminho livre     | Branco    |
-|    S    | Início            | Azul      |
-|    E 	  | Saída             | Vermelho  |
-|    P	  | Posição atual     | Verde     |
-
+`python labirinto_terminal.py`
 
 ## 🧠 Como o Autômato está atuando no código?
 
-✅ 1. Estado Atual (self.estado_atual)
+✅ 1. Estado Atual (`self.estado_atual`)
+
 - Representa a posição atual do jogador no labirinto.
 
 - É atualizado a cada movimento válido.
 
-🔁 2. Transições (mover(direcao))
+🔁 2. Transições (`mover(direcao)`)
+
 - Quando o jogador fornece um comando (input), o autômato processa essa entrada e tenta realizar uma transição de estado.
 
 - Se o próximo estado for válido (não é parede, nem fora dos limites), a transição é realizada.
@@ -117,11 +108,13 @@ python labirinto_terminal.py
 - Isso simula o funcionamento exato de um AFD, onde para cada estado e entrada, há uma transição definida (ou não, se inválida).
 
 ❌ 3. Transições Inválidas
+
 - Se a transição leva a uma parede ou fora do labirinto, ela é rejeitada, e o estado atual permanece o mesmo.
 
 - Isso reforça o conceito de um autômato que não muda de estado se não há uma transição válida para a entrada fornecida.
 
-🏁 4. Estado Final (self.estado_final())
+🏁 4. Estado Final (`self.estado_final()`)
+
 - Quando o jogador atinge o estado final (a célula da saída), o autômato reconhece que atingiu o estado de aceitação.
 
 - O jogo termina com uma mensagem de sucesso, assim como um AFD que reconhece uma cadeia ao chegar a um estado final.
@@ -133,10 +126,10 @@ python labirinto_terminal.py
 | ------------------- | --------------------------------------------- |
 | Estados             |   Células do labirinto (x, y)                 |
 | Estado Inicial	    |   self.inicio                                 |
-| Estado Atual	      |   self.estado_atual                           |
-| Estado Final	      |   self.fim                                    |
+| Estado Atual	       |   self.estado_atual                           |
+| Estado Final	       |   self.fim                                    |
 | Alfabeto (Entradas) |	  ["cima", "baixo", "esquerda", "direita"]    |
-| Transições	        |   Método mover(direcao)                       |
+| Transições	       |   Método mover(direcao)                       |
 | Regras de Transição |   Método estado_valido(estado)                |
 | Aceitação da Cadeia |   Quando estado_atual == fim                  |
 
@@ -239,7 +232,7 @@ Então:
 
 * Classe que simula um autômato finito para navegação em um labirinto.
 
-__init__(labirinto, inicio, fim) :
+`__init__(labirinto, inicio, fim)` :
 
 * Inicializa o autômato com o labirinto, o ponto inicial e o ponto final.
 
@@ -249,14 +242,14 @@ labirinto: matriz 2D com paredes (#) e caminhos (.) :
 
 * fim: tupla (linha, coluna) da saída
 
-mover(direcao) :
+`mover(direcao)` :
 * Move o jogador em uma das 4 direções, se possível.
 
 * Parâmetro: 'cima', 'baixo', 'esquerda' ou 'direita'
 
 * Retorna: True se o movimento foi válido, False caso contrário.
 
-estado_valido(estado) :
+`estado_valido(estado)` :
 
 * Verifica se uma posição é válida (não é parede e está dentro dos limites).
 
@@ -264,12 +257,12 @@ estado_valido(estado) :
 
 * Retorna: True ou False.
 
-estado_final() :
+`estado_final()` :
 * Verifica se o jogador chegou ao estado final.
 
 * Retorna: True se chegou na saída (fim), False caso contrário.
 
-exibir_labirinto() :
+`exibir_labirinto()` :
 
 * Exibe o labirinto no terminal.
 
@@ -298,28 +291,30 @@ exibir_labirinto() :
 
 ### 🔧 Classe JogoLabirinto
 
-* \_\_init_\_( ) : Inicializa a janela, o canvas, os botões e o labirinto.
+* `__init__( )` : Inicializa a janela, o canvas, os botões e o labirinto.
 
 * Define o ponto inicial, o final e a posição atual do jogador.
 
 ### 📦 Métodos principais
 
-* criar_botoes()
+* `criar_botoes()`
+
+
   - Cria os botões de movimento (↑, ↓, ←, →) no layout.
 
-* mover(direcao) :
+* `mover(direcao)` :
 
   - Move o jogador na direção especificada, se o caminho for válido. Se o jogador chegar ao fim, exibe a mensagem "🎉 Venceu!".
 
-* estado_valido(estado) :
+* `estado_valido(estado)` :
 
   - Verifica se a célula é acessível (não é parede nem fora da matriz).
 
-* desenhar_labirinto() : 
+* `desenhar_labirinto()` : 
 
   - Desenha o labirinto no canvas.
 
-* definir_labirinto_fixo() :
+* `definir_labirinto_fixo()` :
 
   - Retorna uma matriz 10x10 com o layout do labirinto, o ponto de início e o de saída.
 
