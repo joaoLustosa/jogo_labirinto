@@ -1,3 +1,14 @@
+# Jogo de Labirinto utilizando AFN
+
+## Integrantes
+
+- **Isake Assis Abreu Molina** – RGM: 30260671  
+- **Sávio Guimarães Saraiva** – RGM: 30359201  
+- **Pedro Mateus Neves de Oliveira** – RGM: 29988080  
+- **João Marcos Aguiar Lustosa** – RGM: 30620406  
+- **Felipe Monteiro Silveira** – RGM: 31555675
+
+
 # 🧭 Jogo do Labirinto em Python
 
 Um projeto para a materia Linguagens Formais e Autômatos  que simula a travessia de um labirinto com duas abordagens:
